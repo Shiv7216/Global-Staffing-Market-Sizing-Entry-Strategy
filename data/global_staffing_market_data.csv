@@ -1,0 +1,13 @@
+country,region,skilled_labor_deficit_k,avg_annual_bill_rate_usd,agency_penetration_pct,gross_margin_spread_pct,regulatory_ease_score,it_demand_index,healthcare_demand_index,competitive_density_score
+United States,North America,1420,98500,14.8,24.5,8.4,9.5,9.3,7.2
+United Kingdom,Europe,480,78200,16.2,22.8,8.6,8.9,9.1,7.4
+Germany,Europe,610,82400,11.5,21.0,6.8,8.7,8.8,8.1
+Canada,North America,340,74500,12.4,20.5,8.2,8.1,8.5,7.8
+Australia,APAC,290,81000,13.6,21.8,7.9,8.0,8.6,7.9
+Netherlands,Europe,210,84000,15.1,22.0,7.7,8.4,8.0,7.5
+Ireland,Europe,125,86500,14.2,23.1,8.5,8.8,7.9,8.0
+United Arab Emirates,APAC/MEA,195,68000,18.5,26.0,8.8,7.8,8.2,8.4
+Singapore,APAC,140,79500,14.0,21.5,8.7,8.6,7.7,7.6
+France,Europe,390,75000,10.8,18.5,6.1,7.9,8.1,7.3
+Japan,APAC,720,71000,9.4,19.2,5.8,8.5,9.0,8.2
+
