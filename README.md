@@ -33,3 +33,62 @@ Each target country was evaluated across five weighted dimensions: **Regulatory 
 | **6** | **Canada** | North America | $3.14B | **$0.12B** | 20.5% | 8.2 | 8.1 / 8.5 | **7.92 / 10** |
 | **7** | **Germany** | Europe | $5.78B | **$0.22B** | 21.0% | 6.8 | 8.7 / 8.8 | **7.83 / 10** |
 
+
+---
+
+## 2. Quantitative Valuation Methodology & SQL Analytics
+
+### 2.1 Top-Down & Bottom-Up Sizing Formula
+<pre><code>Addressable Market (TAM) = Skilled_Labor_Deficit * Avg_Annual_Bill_Rate * Agency_Penetration_Rate
+Serviceable Market (SAM) = TAM * Gross_Margin_Spread * Mid_Market_Segment_Share (18.5%)
+Obtainable Market (SOM)  = SAM * 3-Year_Target_Capture_Rate (8.0%)</code></pre>
+
+### 2.2 Corridor Prioritization & Composite Ranking Query (`sql/market_corridor_analysis.sql`)
+<pre><code>SELECT
+    country,
+    region,
+    gross_margin_spread_pct,
+    regulatory_ease_score,
+    it_demand_index,
+    healthcare_demand_index,
+    ROUND(
+        (regulatory_ease_score * 0.25) +
+        ((gross_margin_spread_pct / 3.0) * 0.20) +
+        (it_demand_index * 0.20) +
+        (healthcare_demand_index * 0.20) +
+        (competitive_density_score * 0.15), 2
+    ) AS composite_entry_score,
+    DENSE_RANK() OVER (
+        ORDER BY (
+            (regulatory_ease_score * 0.25) +
+            ((gross_margin_spread_pct / 3.0) * 0.20) +
+            (it_demand_index * 0.20) +
+            (healthcare_demand_index * 0.20) +
+            (competitive_density_score * 0.15)
+        ) DESC
+    ) AS priority_rank
+FROM global_staffing_market
+ORDER BY composite_entry_score DESC;</code></pre>
+
+---
+
+## 3. Phased Go-To-Market (GTM) Expansion Roadmap
+
+* **Phase 1 — US & UK Anchor Corridors (Months 1-6):** Target mid-market MSP/VMS ecosystems and regional healthcare networks in the US and UK. Focus on high-margin contract-to-hire IT engineering roles and credentialed allied-healthcare placements (`$95K+` annualized bill rate).
+* **Phase 2 — EU & APAC Bilateral Corridors (Months 7-12):** Expand into Ireland, Australia, and Germany utilizing Employer-of-Record (EOR) compliance partners to streamline work-permit sponsorship and reduce onboarding lead times by **35%**.
+* **Phase 3 — Enterprise Account Penetration (Months 13-24):** Transition transactional staffing accounts into multi-year managed capacity agreements to capture **$145.6M in cumulative SOM**.
+
+---
+
+## Repository Structure
+
+<pre><code>data/
+  global_staffing_market_data.csv    Cross-border labor deficit, bill rate, and margin dataset
+models/
+  tam_sam_som_sizing_model.py        Python TAM/SAM/SOM valuation & weighted scorecard model
+sql/
+  market_corridor_analysis.sql       PostgreSQL regional sizing and DENSE_RANK() scorecard queries
+docs/
+  gtm_entry_roadmap.md               Executive Go-To-Market phased implementation brief
+README.md                            Executive case study, scorecard tables, and methodology</code></pre>
+
